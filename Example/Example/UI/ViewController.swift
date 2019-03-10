@@ -5,23 +5,17 @@
 import UIKit
 import Swifjection
 
-class ViewController: UIViewController, Creatable, Injectable {
+class ViewController: UIViewController {
     
     var bar: Bar?
     var singleton: ExampleSingleton?
     var automaticallyInjectableObject: AutoInjectableObject?
     var injectCreatableObject: InjectCreatableObject?
-    
-    func injectDependencies(injector: Injecting) {
-        bar = injector.getObject(withType: Bar.self)
-        singleton = injector.getObject(withType: ExampleSingleton.self)
-        automaticallyInjectableObject = injector.getObject(withType: AutoInjectableObject.self)
-        injectCreatableObject = injector.getObject(withType: InjectCreatableObject.self)
-    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        NSLog("\(String(describing: injector))")
         NSLog("\(String(describing: bar))")
         NSLog("\(String(describing: singleton))")
         NSLog("\(String(describing: automaticallyInjectableObject))")
@@ -29,3 +23,15 @@ class ViewController: UIViewController, Creatable, Injectable {
     }
 }
 
+extension ViewController: AutoInjectable {
+
+    var injectableProperties: [InjectableProperty] {
+        return [
+            requires(\ViewController.bar),
+            requires(\ViewController.singleton),
+            requires(\ViewController.automaticallyInjectableObject),
+            requires(\ViewController.injectCreatableObject)
+        ]
+    }
+
+}

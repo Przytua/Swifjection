@@ -1,5 +1,15 @@
 # Swifjection Changelog
 
+## [0.8.1] - 10.03.2019
+### Added
+* Common extensions of View Controllers (`UIViewController`, `UITabBarController`, `UINavigationController` and `UISplitViewController`), for easy, propagated injection from App Delegate:
+
+  ```Swift
+  if let injector = self.injector, let rootViewController = window?.rootViewController as? Injectable {
+      rootViewController.injectDependencies(injector: injector)
+  }
+  ```
+
 ## [0.8.0] - 06.03.2019
 ### Added
 * Automatic injection with `AutoInjectable` protocol using:
